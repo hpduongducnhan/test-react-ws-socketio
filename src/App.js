@@ -2,9 +2,8 @@ import io from "socket.io-client";
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-
-const NAMESPACE = '/pbx-call'
-const socket = io("172.27.228.157:3015" + NAMESPACE)
+const page_origin = window.location.origin
+const socket = io(page_origin, {path: "/ws/socket.io"})
 
 
 /*
