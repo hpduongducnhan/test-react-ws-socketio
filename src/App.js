@@ -2,8 +2,25 @@ import io from "socket.io-client";
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJmYmE4NmIzLTJkZmMtMTFlZC05Mzk0LTAyNDJjMGE4MDEwMyIsInJvbGVfaWQiOiJmZjc2ZDVmMi0xZTQ3LTExZWQtYjhkYi0wMjQyYzBhODAxMDMiLCJuYW1lIjoibmhhbmRkM0BmcHQuY29tLnZuIiwiZW1wX2lkIjpudWxsLCJlbWFpbCI6Im5oYW5kZDNAZnB0LmNvbS52biIsImdlbmRlciI6bnVsbCwiZG9iIjpudWxsLCJjZWxsX3Bob25lIjpudWxsLCJqb2JfdGl0bGUiOm51bGwsInN1cGVydmlzb3JfbmFtZSI6bnVsbCwibG9jYXRpb24iOm51bGwsInBhcmVudF9kZXBhcnRtZW50IjpudWxsLCJjaGlsZF9kZXBhcnRtZW50XzEiOm51bGwsImNoaWxkX2RlcGFydG1lbnRfMiI6bnVsbCwicm9sZSI6Ik5ow6JuIHZpw6puIiwic3RhdHVzIjoxLCJpYXQiOjE2NjU2NTIwMjksImV4cCI6MTY2NjI1NjgyOX0.baHfO8cY6BIQD20-CmdKW3aAT2Sfg9JNR08e6xidmVQ"
 const page_origin = window.location.origin
-const socket = io(page_origin, {path: "/ws/socket.io"})
+const dev_domain = "http://172.24.222.103"
+const minhhv = "https://webhook.minhhv11.xyz"
+const local_domain = "http://172.20.227.86:3000"
+const nhan_chatws = "wss://nhandd.minhhv11.xyz"
+const local_nhan_pc = "http://localhost:3000"
+const voicebot = "http://172.27.228.236:8111"
+const socket = io(voicebot, {
+  path: "/ws/socket.io", 
+  reconnect: false,
+  transports: ['websocket'],
+  
+  // withCredentials: true,
+  // extraHeaders: {
+  //   "Authorization": "Bearer " + token,
+  // },
+})
 
 
 /*
@@ -34,9 +51,11 @@ function App() {
         // authenticate when connected
         let authenticationData = {
           id: authID,
+          user_id: authID,
           token: TOKEN,
         }
         socket.emit(EVENT_AUTHENTICATION, authenticationData) // send jwt token
+        socket.emit('user_id', authenticationData) // send jwt token
       }     
 
       // server response when get a request from client
